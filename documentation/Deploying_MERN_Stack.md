@@ -14,122 +14,88 @@
       ```
 
    2. **Install Node.js:**
-      Node.js can be installed directly from Ubuntu's repositories, but it might not be the latest version. For the latest version, use the NodeSource repository:
+      You can install it locally, but you will need to update it.
       ```bash
-      curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-      sudo apt-get install -y nodejs
+      sudo apt install nodejs
+      
+      sudo npm install -g n
+      
+      sudo n lts
+      
+      node -v
       ```
 
-      This will install Node.js 16.x and npm.
+      Check and see that your node version is at least 20+
 
+   3. **Install NPM**
+      ```bash
+      sudo apt install npm
+      ```   
+      
    3. **Verify Installation:**
       After installation, you can verify it by checking the version of Node.js and npm:
       ```bash
       node -v
+      
       npm -v
       ```
 
-4. **Set Up Backend with Express and MongoDB**
+4. **Set MongoDB**
 
    1. **Install MongoDB:**
       MongoDB is not available in Ubuntu’s default repositories. You can install it using MongoDB’s repositories.
 
       See the documentation [here](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/)
 
-      - Import the MongoDB key using the package manager:
+   - Import the MongoDB key using the package manager:
       ```bash
-      sudo apt-get install gnupg curl
-      ```
+      sudo apt install gnupg2 
+      
+      wget -nc https://www.mongodb.org/static/pgp/server-6.0.asc 
 
-      - OR: To import the MongoDB public GPG key:
+      cat server-6.0.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/mongodb.gpg >/dev/null 
+      ```
+   - These commands will import the GPG key for the MongoDB repository, which is used to verify the authenticity of the packages in the repository.
+      
+   - Add the MongoDB repository to your system's package manager:
       ```bash
-      curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \ sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \ --dearmor
+      sudo sh -c 'echo "deb [ arch=amd64,arm64 signed-by=/etc/apt/keyrings/mongodb.gpg] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" >> /etc/apt/sources.list.d/mongo.list' 
       ```
-      - Create the list file `/etc/apt/sources.list.d/mongodb-org-7.0.list` for your version of Ubuntu
-
-      - If you are using Ubuntu 22.04 (Jammy):
-         - Run `echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list`
-         - Reload the local packages `sudo apt-get update`
-         - Install the latest stable version of Mongo DB
-            ```bash
-            sudo apt-get install -y mongodb-org
-            ```
-      - If you are using Ubuntu 20.04 (Focal):
-
-         ```bash
-         echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
-         ```   
-         - Reload the local packages `sudo apt-get update`
-         - Install the latest stable version of Mongo DB
-            ```bash
-            sudo apt-get install -y mongodb-org
-            ```
-      - Start MongoDB:
+   - Update the package list:
       ```bash
-      sudo systemctl start mongod
+      sudo apt update 
       ```
 
-   2. **Verify MongoDB Installation:**
-      Check the status of MongoDB to ensure it's running:
+   - Install MongoDB:
       ```bash
-      sudo systemctl status mongod
+      sudo apt install mongodb-org 
       ```
-
-   3. **Create a Directory for Your Express Application:**
+   - Start the MongoDB service:
       ```bash
-      mkdir myapp
-      cd myapp
+      sudo systemctl start mongod  
       ```
-
-   4. **Initialize a Node.js Project:**
-      Initialize your Node.js project with a `package.json` file:
+   2. **Connect to MongoDB:**
+      Connect to the MongoDB shell with the following command:
       ```bash
-      npm init -y
+      mongosh
       ```
 
-   5. **Install Express and Mongoose:**
-      Install Express and Mongoose (ODM for MongoDB):
+5. **Setting Up The React App**
+   1. **Create React Project**   
+      We are going to create the intital React project by using the `create react app` script
       ```bash
-      npm install express mongoose
+      npx create-react-app [YOUR_APP_NAME]
       ```
-
-   6. **Set Up Your Express Application:**
-      Create a file for your server, e.g., `index.js`:
+      Now, change into the newly created folder that contains the default React project template with all the dependencies installed
       ```bash
-      touch index.js
+      cd [YOUR_APP_NAME]
       ```
-
-      Open `index.js` with a text editor and write your basic server code. Here’s a simple example:
-      ```javascript
-      const express = require('express');
-      const mongoose = require('mongoose');
-      const app = express();
-      const port = 3000;
-
-      // Replace with your MongoDB connection string
-      mongoose.connect('mongodb://localhost:27017/myapp', { useNewUrlParser: true, useUnifiedTopology: true });
-
-      app.get('/', (req, res) => {
-      res.send('Hello World!');
-      });
-
-      app.listen(port, () => {
-      console.log(`Example app listening at http://localhost:${port}`);
-      });
-      ```
-
-   7. **Run Your Express Server:**
-      To start your server, run:
+      then, start the development web server
       ```bash
-      node index.js
+      npm start
       ```
+      Then, see the result in the browser, it should be at `http://YOUR_INSTANCE_IP:3000`
 
-      Your Express server should now be running and connected to MongoDB. You can access it by visiting `http://[your_VM_IP]:3000` in a web browser. Remember to replace `[your_VM_IP]` with the actual public IP address of your Ubuntu instance on Jetstream2.
-
-5. **Develop Your React Frontend:**
-   - On your local machine, create a React application using `create-react-app`.
-   - Develop your frontend, making sure to build it to interact with your backend (you can use `fetch` or `axios` for HTTP requests).
-   - Once your frontend is ready, you can build it for production using `npm run build`.
 
 6. **Deploy Your Frontend and Backend on the VM:**
    - Transfer your built React application and your backend code to your VM using SCP (Secure Copy Protocol) or a similar tool. SFTP (Secure File Transfer Protocal) works as well.
@@ -137,7 +103,6 @@
 
 7. **Run Your Application:**
    - Start your Express server on the VM. You can use a process manager like `pm2` to keep it running (`npm install pm2 -g`).
-   - Open the necessary ports in your VM's firewall to allow traffic to your application (usually port 80 for HTTP and/or 443 for HTTPS).
 
 8. **Access Your Application:**
    - Once everything is up and running, you can access your application using the VM's IP address or a domain name pointed to that IP.

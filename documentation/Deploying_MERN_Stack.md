@@ -27,11 +27,6 @@
 
       Check and see that your node version is at least 20+
 
-   3. **Install NPM**
-      ```bash
-      sudo apt install npm
-      ```   
-      
    3. **Verify Installation:**
       After installation, you can verify it by checking the version of Node.js and npm:
       ```bash
@@ -79,23 +74,6 @@
       ```bash
       mongosh
       ```
-
-5. **Setting Up The React App**
-   1. **Create React Project**   
-      We are going to create the intital React project by using the `create react app` script
-      ```bash
-      npx create-react-app [YOUR_APP_NAME]
-      ```
-      Now, change into the newly created folder that contains the default React project template with all the dependencies installed
-      ```bash
-      cd [YOUR_APP_NAME]
-      ```
-      then, start the development web server
-      ```bash
-      npm start
-      ```
-      Then, see the result in the browser, it should be at `http://YOUR_INSTANCE_IP:3000`
-
 
 6. **Deploy Your Frontend and Backend on the VM:**
    - Transfer your built React application and your backend code to your VM using SCP (Secure Copy Protocol) or a similar tool. SFTP (Secure File Transfer Protocal) works as well.

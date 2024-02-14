@@ -22,7 +22,7 @@ Use Exosphere via your web browser. Visit [Exosphere](https://jetstream2.exosphe
 - For login assistance, see the [Exosphere Login Guide](https://docs.jetstream-cloud.org/ui/exo/login/).
 - Click “Add Allocation” and then “Add ACCESS Account”. Choose ACCESS CI (XSEDE) as your identity provider and log in with your ACCESS account.
 - Create instances for your students (to simplify the process for them) by following these steps: [Create Instance Guide](https://docs.jetstream-cloud.org/ui/exo/create_instance/).
-- Choose 'By Type' under instance source, and select the latest Ubuntu version. NOTE: Ubuntu 20.04 works as well for all the instructions
+- Choose 'By Type' under instance source, and select the latest Ubuntu version (Ubuntu 22.04)
     - Name the instance in the format: STUDENTLNAME_CLASSCRN_YEAR (e.g., PIEPER_CS333_2024).
     - Opt for the smallest instance flavor to conserve resources, unless otherwise instructed.    
         - All deployment instructions have been tested and are fully functional on an m3.tiny size, this is recommended unless your students are using very intensive resources. Bigger sizes burn many more SUs per hour, so it is important to give students the minimum size possible.
@@ -30,15 +30,10 @@ Use Exosphere via your web browser. Visit [Exosphere](https://jetstream2.exosphe
         - For a tiny instance using Ubuntu and no web desktop option, the burn rate is 1 SU/hour, which is lower than having it enabled
 
 ## Sharing the Credentials
-
-# Student Instructions for Accessing the Instance
-## Accessing Your Exosphere Instances
-You can find the docs here for access [Access Instance Guide](https://docs.jetstream-cloud.org/ui/exo/access-instance/).
-Open a terminal on your local machine.
-For SSH Passphrase Authentication:
-- To connect to the instance execute in your terminal `ssh exouser@<PUBLIC_IP>` where the `<PUBLIC_IP>` is the instance’s public IP address. This should be provided to you by your professor.
-- When prompted, enter the exouser passphrase that was generated when your professor created the instance. Your professor should have shared it with you, ensure that you don't have extra lines, spaces, or characters at the end of thre passphrase.
-- If you lose the passphrase, contact your professor for help.
+- Go into each of the instances within Exosphere
+![Image of instances homepage](/images/instances_home.png)
+- Select one of the instances, and copy down the public IP address and the passphrase. Make sure to share each IP/passphrase only with the student who will be using the VM. If a student loses their passphrase, you can check it again within the Exosphere web console.
+![Image of instances details](/images/passphrase.png)
 
 ## Final Notes
-This guide aims to streamline your initial setup and instance deployment on Jetstream2 using Exosphere. Should you encounter any difficulties or need further clarification, do not hesitate to reach out to your instructor or the Jetstream support team. Happy computing!
+This guide aims to streamline your initial setup and instance deployment on Jetstream2 using Exosphere. Should you encounter any difficulties or need further clarification, do not hesitate to reach out to the Jetstream support team. Happy computing!

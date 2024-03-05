@@ -139,24 +139,24 @@ detects a change to the code.
 
    2. Add the following configuration (adjust paths and ports as necessary):
       ``` bash
-      server {
-         listen 80;
+            server {
+            listen 80;
+            server_name YOUR_IP_HERE;
 
-         server_name your.server.ip;
+            location / {
+               root PATH_TO_BUILD;
+               try_files $uri /index.html;
+            }
 
-         location / {
-            proxy_pass http://localhost:YOUR_NODE_SERVER_PORT;
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection 'upgrade';
-            proxy_set_header Host $host;
-            proxy_cache_bypass $http_upgrade;
+            location /api/ {
+               proxy_pass http://localhost:3000;
+               proxy_http_version 1.1;
+               proxy_set_header Upgrade $http_upgrade;
+               proxy_set_header Connection 'upgrade';
+               proxy_set_header Host $host;
+               proxy_cache_bypass $http_upgrade;
+            }
          }
-
-         location /static {
-            alias /path/to/your/react-app/build/static;
-         }
-      }
       ```
 
    3. Enable the configuration by creating a symlink:

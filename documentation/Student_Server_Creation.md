@@ -1,24 +1,25 @@
-## Modifying ToDo App
-On Your local machine
-## replace references to localhost
 
+## 1. Local Modifications to the Todo App 
+First of all edit the code on your local machine
+
+1. Disable `cors` in `backend/index.js` by commenting out the following lines:
+```javascript
+import cors from 'cors'
+
+import { corsOptions } from './config/corsOptions.js'
+
+app.use(cors(corsOptions))
 ```
+
+2. Replace `localhost:3000` with `api` in the whole code base by running the following command within the *frontend* directory:
+```bash
 find frontend/src -type f -exec sed -i 's/http:\/\/localhost:3000/\/api/g' {} \;
 ```
 
-
-
-## building the front end
-
-`cd` into the `frontend` directory, and run 
-```
-npm install
-```
-to install all the requirements, and 
-```
-npm run build
-```
-to compile your react project into a `build` directory. This will be within the `frontend` directory.
+3. Build the local app
+    1. `cd` into the `frontend` directory
+    2. Run `npm install` to install all the requirements
+    3. Run `npm run build` to compile your react project into a `build` directory. This will be within the `frontend` directory.
 
 ## SSH into the Jetstream VM
 ### MacOS or Linux
@@ -140,9 +141,6 @@ git clone git@github.com:SOU-Boscoe/lab9-<your-username>.git
 where `<your-username>` is your github username. 
 `cd` into the folder that was created. This is your project root. 
 
-## Disable cors in backend/index.js
-
-Go in there in vim and comment out the line that tells express to use the cors middleware. 
 
 ## configuring nginx
 
@@ -200,7 +198,7 @@ sudo systemctl enable nginx && sudo systemctl start nginx
 ```
 
 
-## running node.js
+## Running the App
+As of now the server should be serving (running) on the front end. If you visit the IP/URL you should see a static web app with no backend. This is because there is nothing to pass the API requests to. Node needs to be run in a terminal for API requests to work.
 
-Your server should now be serving the front end, but it has nothing to pass api requests off to. We must run node in a terminal for api requests to work. 
-`cd` into the backend folder within your project root and run `npm install` and `npm run start`. 
+1. `cd` into the backend folder and run `npm install` and `npm run start`. 

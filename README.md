@@ -7,8 +7,13 @@
 - [x] Research best options for building MERN stack (MongoDB, Express, React, Node) on Jetstream2.
 
 ### Milestone 2
-- [ ] Test setup on a simple React app to ensure it works, and document setup instructions for installs and configurations.
+- [x] Test setup on a simple React app to ensure it works, and document setup instructions for installs and configurations.
 
 ### Milestone 3
 - [x] Research Docker container build as a way to deploy then test, and document Docker container instructions for Jetstream, containing a MERN stack.
 - [x] Fully containerized solution. If possible, potentially multiple images with different levels of ‘completeness’ so that professors could choose which level to teach their class.
+
+### Further Work
+- [ ] Research why cors is not working
+- [ ] Research PM2
+ 

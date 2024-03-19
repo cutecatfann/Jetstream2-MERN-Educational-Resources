@@ -1,4 +1,7 @@
 # Jetstream2-MERN-Educational-Resources
+## Mimi Pieper
+
+Objective: Create a MERN based educational resource on Jetstream using Exosphere
 
 ## Engagement Todos
 
